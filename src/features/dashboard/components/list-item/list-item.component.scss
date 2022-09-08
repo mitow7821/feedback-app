@@ -1,0 +1,31 @@
+.card {
+  @apply bg-white p-7 rounded-md flex gap-5;
+
+  .upvotesContainer {
+    @apply flex flex-col items-center justify-center bg-blue-100 min-w-[2.25rem] h-[2.75rem] rounded text-sm text-gray-700 cursor-pointer;
+
+    .upvotes {
+      @apply leading-4 font-semibold;
+    }
+  }
+
+  .main {
+    @apply grid gap-2 mr-5;
+
+    .title {
+      @apply font-bold text-gray-700 leading-3 text-lg;
+    }
+
+    .description {
+      @apply text-ellipsis overflow-hidden whitespace-nowrap;
+    }
+
+    .category {
+      @apply text-sm font-medium text-blue-700 bg-blue-100 w-min px-3 py-0.5 rounded-full;
+    }
+  }
+
+  .comments {
+    @apply ml-auto font-semibold text-gray-700;
+  }
+}

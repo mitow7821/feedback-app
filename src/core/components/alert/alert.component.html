@@ -1,0 +1,14 @@
+<div class="fixed top-5 right-4 flex flex-col z-50 gap-3.5" *ngIf="alertService.alerts.length">
+    <div *ngFor="let alert of alertService.alerts"
+        class="bg-white border-l-[10px] rounded px-5 py-3 w-80 shadow-xl text-gray-800"
+        [style.borderColor]="getBorderColor(alert.type)">
+        <div class="flex gap-2 flex-wrap justify-between">
+            <h1 class="text-lg font-medium ">{{alert.title}}</h1>
+
+            <div class="bg-gray-200 h-5 w-5 grid place-content-center rounded-full cursor-pointer"
+                (click)="alertService.closeAlert(alert.id)">x</div>
+        </div>
+
+        <p class="text-sm" *ngIf="alert.description">{{ alert.description }}</p>
+    </div>
+</div>

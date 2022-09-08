@@ -1,0 +1,8 @@
+<div class="bg-white p-6 flex flex-wrap gap-3 rounded-md">
+    <span *ngFor="let category of itemCategoryService.categories"
+        (click)="itemCategoryService.changeSelectedCategory(category)"
+        class="px-4 py-1 rounded-md font-medium text-sm cursor-pointer"
+        [ngClass]="category === itemCategoryService.selectedCategory ? 'bg-blue-800 text-white' : 'bg-blue-100 text-blue-800'">
+        {{category}}
+    </span>
+</div>

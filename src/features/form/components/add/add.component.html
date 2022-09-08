@@ -1,0 +1,58 @@
+<div class="flex flex-col bg-blue-50 py-14 px-32 h-full items-center overflow-hidden">
+    <div class="max-w-[600px] h-full flex flex-col overflow-hidden">
+        <a class="font-medium cursor-pointer" (click)="navigationService.goBack()">&lt; Go Back</a>
+
+        <div class="relative">
+            <div class="bg-purple-600 w-11 h-11 grid place-content-center rounded-full absolute top-5 left-10">
+                <span class="text-2xl font-semibold text-white leading-[1.2rem]">
+                    +
+                </span>
+            </div>
+        </div>
+
+        <form class="bg-white rounded-md mt-10 flex flex-col gap-6 p-10 overflow-hidden grow" [formGroup]="form"
+            (ngSubmit)="onSubmit()">
+            <h1 class=" font-semibold text-xl text-gray-800 ">Create New Feedback</h1>
+
+            <div class=" grid gap-4 overflow-auto">
+                <div class="grid">
+                    <label class="font-medium" required>Feedback Title</label>
+                    <span class="text-gray-500 mb-1">Add a short, descriptive headline</span>
+                    <input type="text" class="bg-gray-100 p-2 rounded" formControlName="title">
+
+                    <div *ngIf="titleErrors" class="text-red-500">
+                        <span *ngIf="titleErrors?.['required']">Title is required</span>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <label class="font-medium">Category</label>
+                    <span class="text-gray-500 mb-1">Choose a category for your feedback</span>
+
+                    <select class="bg-gray-100 p-2 rounded" formControlName="category">
+                        <option value="{{category}}" *ngFor="let category of itemCategories">{{category}}</option>
+                    </select>
+                </div>
+
+                <div class="grid">
+                    <label class="font-medium">Feedback Detail</label>
+                    <span class="text-gray-500 mb-1">Include any specific comment of what sould be implemented, added,
+                        etc.</span>
+
+                    <textarea cols="30" rows="5" class="bg-gray-100 p-2 rounded"
+                        formControlName="description"></textarea>
+                </div>
+            </div>
+
+            <div class="flex gap-3 justify-end mt-auto">
+                <button (click)="navigationService.goBack()"
+                    class="bg-[#171D54] py-2 px-4 rounded-md cursor-pointer text-white">Cancel</button>
+                <button type="submit"
+                    class="bg-purple-600 py-2 px-4 rounded-md  cursor-pointer text-white disabled:bg-purple-300 disabled:cursor-not-allowed"
+                    [disabled]="!form.valid">Add
+                    Feedback</button>
+            </div>
+        </form>
+    </div>
+
+</div>

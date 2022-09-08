@@ -1,0 +1,18 @@
+<div class="w-full overflow-y-hidden h-full flex gap-3 pb-3">
+
+    <div *ngFor="let status of roadmapService.statuses"
+        class="flex flex-col gap-5 min-w-[400px] overflow-hidden flex-grow">
+        <div>
+            <h3 class="font-semibold text-gray-800">{{status.name}} ({{status.numberOfItems}})</h3>
+            <span>
+                lorem
+            </span>
+        </div>
+
+        <div class="flex flex-col gap-3 overflow-auto">
+            <div *ngFor="let item of status.items">
+                <board-item [item]="item" [color]="status.color"></board-item>
+            </div>
+        </div>
+    </div>
+</div>
