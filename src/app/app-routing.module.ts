@@ -17,6 +17,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('src/features/form/form.module').then((m) => m.FormModule),
   },
+  {
+    path: 'feedback',
+    loadChildren: () =>
+      import('src/features/comments/comments.module').then(
+        (m) => m.CommentsModule
+      ),
+  },
 ];
 
 @NgModule({

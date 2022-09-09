@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertType } from 'src/core/enums/alert-type';
 import { ItemCategory } from 'src/core/enums/item-category';
 import { ItemStatus } from 'src/core/enums/item-status';
@@ -12,6 +7,7 @@ import { AlertService } from 'src/core/services/alert.service';
 import { ListItemsService } from 'src/core/services/list-items.service';
 import { NavigationService } from 'src/core/services/navigation.service';
 import { ListItem } from 'src/features/dashboard/models/list-item';
+import { v4 } from 'uuid';
 
 @Component({
   selector: 'add',
@@ -47,18 +43,18 @@ export class AddComponent {
   }
 
   public onSubmit() {
-    console.log(this.form.value);
     if (!this.form.valid) {
       return;
     }
 
     const payload: ListItem = {
-      descripton: this.form.value.description ?? '',
+      description: this.form.value.description ?? '',
       title: this.form.value.title ?? '',
       category: this.form.value.category ?? ItemCategory.FEATURE,
       comments: [],
       status: ItemStatus.PLANNED,
       upvotes: 0,
+      id: v4(),
     };
 
     this.listItemsService.addItem(payload);

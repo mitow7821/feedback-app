@@ -16,13 +16,15 @@ export class NavigationService {
     });
   }
 
-  public goBack() {
-    this.history.pop();
+  public goBack(length = 1) {
+    for (let i = 0; i < length; i++) {
+      this.history.pop();
 
-    if (this.history.length > 0) {
-      this.location.back();
-    } else {
-      this.router.navigateByUrl('/');
+      if (this.history.length > 0) {
+        this.location.back();
+      } else {
+        this.router.navigateByUrl('/');
+      }
     }
   }
 }

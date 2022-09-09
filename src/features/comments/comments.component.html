@@ -1,1 +1,46 @@
-<p *ngIf="true"> comments works!</p>
+<div *ngIf="item" class="flex flex-col bg-blue-50 py-14 px-32 h-full items-center overflow-hidden">
+    <div class="max-w-[800px] h-full flex flex-col overflow-hidden w-full gap-5">
+        <div class="flex justify-between">
+            <a class="font-medium cursor-pointer" (click)="navigationService.goBack()">&lt; Go Back</a>
+
+            <a [routerLink]="'/'+item.id" class="text-white bg-blue-600 py-2 px-4 rounded-md">Edit Feedback</a>
+
+        </div>
+
+
+        <div class="flex flex-col gap-5">
+            <div class="bg-white p-7 rounded-md flex gap-5">
+                <div class="flex flex-col items-center justify-center bg-blue-100 min-w-[2.25rem] h-[2.75rem] rounded text-sm text-gray-700 cursor-pointer"
+                    (click)="listItemsService.upvote(item.id)">
+                    <span class="material-symbols-outlined leading-4">
+                        expand_less
+                    </span>
+
+                    <span class="leading-4 font-semibold">
+                        {{ item.upvotes }}
+                    </span>
+                </div>
+
+                <div class="grid gap-2 mr-5">
+                    <h2 class="font-bold text-gray-700 leading-3 text-lg"> {{item.title}} </h2>
+
+                    <p class="text-ellipsis overflow-hidden whitespace-nowrap"> {{item.description}} </p>
+
+                    <span class="text-sm font-medium text-blue-700 bg-blue-100 w-min px-3 py-0.5 rounded-full">
+                        {{item.category}}
+                    </span>
+                </div>
+
+                <div class="ml-auto font-semibold text-gray-700">
+                    {{item.comments.length}}
+                </div>
+            </div>
+
+            <div>
+                {{itemComments|json}}
+            </div>
+
+            <add-comment [item]="item"></add-comment>
+        </div>
+    </div>
+</div>

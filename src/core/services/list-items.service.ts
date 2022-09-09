@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { ListItem } from '../../features/dashboard/models/list-item';
 import { AllCategory } from 'src/core/enums/item-category';
 import { ItemCategoryService } from '../../features/dashboard/services/item-category.service';
+import { v4 } from 'uuid';
+import { Comment } from '../models/comment';
 
 @Injectable({ providedIn: 'root' })
 export class ListItemsService {
@@ -29,14 +31,63 @@ export class ListItemsService {
     this.items.next([new ListItem(payload), ...this.items.getValue()]);
   }
 
-  public upvote(index: number) {
+  public updateItem(payload: ListItem) {
+    const items = this.items.getValue();
+    const newItems = items.map((e) => (e.id === payload.id ? payload : e));
+
+    this.items.next(newItems);
+  }
+
+  public removeItem(id: string) {
+    const items = this.items.getValue();
+    const newItems = items.filter((e) => e.id !== id);
+
+    this.items.next(newItems);
+  }
+
+  public upvote(id: string) {
     this.items.next(
       this.items
         .getValue()
-        .map((item, i) =>
-          index === i ? { ...item, upvotes: item.upvotes + 1 } : item
+        .map((item) =>
+          item.id === id ? { ...item, upvotes: item.upvotes + 1 } : item
         )
     );
+  }
+
+  public addComment(item: ListItem, comment: string) {
+    const items = this.items.getValue();
+
+    const itemComments = item.comments;
+    itemComments.push(
+      new Comment({
+        name: 'Dawid',
+        tag: '@dawid',
+        comment,
+        replies: [],
+        id: v4(),
+      })
+    );
+
+    const newItemPayload: ListItem = {
+      ...item,
+      comments: itemComments,
+    };
+
+    const newItems = items.map((e) => (e.id === item.id ? newItemPayload : e));
+
+    this.items.next(newItems);
+  }
+
+  public getItem(
+    id: string,
+    subscriptionCallback: (item: ListItem | undefined) => any
+  ) {
+    return this.items.subscribe((items) => {
+      const item = items.find((e) => e.id === id);
+
+      subscriptionCallback(item);
+    });
   }
 
   private getItems() {
