@@ -1,15 +1,31 @@
 import { Component } from '@angular/core';
 import { NavigationService } from 'src/core/services/navigation.service';
-import { ListItem } from '../dashboard/models/list-item';
+import { ListItemModel } from '../dashboard/models/list-item';
 import { ListItemsService } from 'src/core/services/list-items.service';
 import { ActivatedRoute } from '@angular/router';
+import { CommentModel } from 'src/core/models/comment';
+import { ReplyInterface } from 'src/core/interfaces/comment';
+
+const pr = new Intl.PluralRules('en-US', { type: 'ordinal' });
+const suffixes = new Map([
+  ['one', 'Comment'],
+  ['two', 'Comments'],
+  ['few', 'Comments'],
+  ['other', 'Comment'],
+]);
+
+interface ReplyEventInterface {
+  comment: CommentModel;
+  replyTag: string;
+}
 
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
 })
 export class CommentsComponent {
-  item: ListItem | undefined;
+  item: ListItemModel | undefined;
+  replyEventData: undefined | ReplyEventInterface;
 
   constructor(
     public navigationService: NavigationService,
@@ -26,5 +42,15 @@ export class CommentsComponent {
 
   get itemComments() {
     return this.item?.comments ?? [];
+  }
+
+  public formatOrdinals(n: number) {
+    const rule = pr.select(n);
+    const suffix = suffixes.get(rule);
+    return `${n} ${suffix}`;
+  }
+
+  public enableReply(e: ReplyEventInterface) {
+    this.replyEventData = e;
   }
 }

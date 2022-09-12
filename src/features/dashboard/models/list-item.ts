@@ -1,12 +1,13 @@
 import { ItemCategory } from 'src/core/enums/item-category';
 import { ItemStatus } from 'src/core/enums/item-status';
-import { Comment } from 'src/core/models/comment';
+import { CommentInterface } from 'src/core/interfaces/comment';
+import { CommentModel } from 'src/core/models/comment';
 import { ListItemInterface } from '../interfaces/list-item';
 
-export class ListItem {
+export class ListItemModel {
   public title: string;
   public description: string;
-  public comments: Comment[];
+  public comments: CommentModel[];
   public category: ItemCategory;
   public status: ItemStatus;
   public upvotes: number;
@@ -15,10 +16,14 @@ export class ListItem {
   constructor(listItem: ListItemInterface) {
     this.title = listItem.title;
     this.description = listItem.description;
-    this.comments = listItem.comments;
+    this.comments = listItem.comments.map((e) => new CommentModel(e));
     this.category = listItem.category;
     this.status = listItem.status;
     this.upvotes = listItem.upvotes;
     this.id = listItem.id;
+  }
+
+  public addComment(e: CommentInterface) {
+    this.comments.unshift(new CommentModel(e));
   }
 }

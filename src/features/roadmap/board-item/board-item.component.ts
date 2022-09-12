@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ListItem } from 'src/features/dashboard/models/list-item';
+import { ListItemModel } from 'src/features/dashboard/models/list-item';
 
 @Component({
   selector: 'board-item [item] [color]',
   templateUrl: './board-item.component.html',
 })
 export class BoardItemComponent implements OnInit {
-  @Input() item!: ListItem;
+  @Input() item!: ListItemModel;
   @Input() color!: string;
 
   constructor() {}

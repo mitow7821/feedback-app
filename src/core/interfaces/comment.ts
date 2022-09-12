@@ -1,11 +1,15 @@
-export interface Comment {
+interface CommentBase {
   name: string;
   tag: string;
   comment: string;
-  replies: ReplyComment[];
   id: string;
+  img: string;
 }
 
-export interface ReplyComment extends Comment {
-  parentTag: string;
+export interface CommentInterface extends CommentBase {
+  replies: ReplyInterface[];
+}
+
+export interface ReplyInterface extends CommentBase {
+  replyTag: string;
 }

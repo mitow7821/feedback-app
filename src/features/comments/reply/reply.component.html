@@ -1,0 +1,20 @@
+<div class="bg-white p-7 rounded-md flex flex-col gap-4">
+    <h2 class="font-bold text-gray-700 leading-3 text-lg"> Reply To {{replyEventData.replyTag}} Comment </h2>
+
+    <textarea placeholder="Type your comment here" rows="3" class="bg-gray-100 p-2 rounded" maxlength="250"
+        [formControl]="comment"></textarea>
+
+    <div class="flex justify-between items-center">
+        <span class="text-sm font-medium text-gray-500">{{leftChars}} Characters left</span>
+
+        <div class="flex gap-3">
+            <button (click)="cancleReply.emit()"
+                class="text-white bg-purple-600 py-2 px-4 rounded-md disabled:bg-purple-400 disabled:cursor-not-allowed">
+                Cancel</button>
+
+            <button [disabled]="comment.status !== 'VALID'" (click)="addReply()"
+                class="text-white bg-purple-600 py-2 px-4 rounded-md disabled:bg-purple-400 disabled:cursor-not-allowed">
+                Reply</button>
+        </div>
+    </div>
+</div>

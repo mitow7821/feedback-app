@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ListItem } from '../../features/dashboard/models/list-item';
+import { ListItemModel } from '../../features/dashboard/models/list-item';
 import { AllCategory } from 'src/core/enums/item-category';
 import { ItemCategoryService } from '../../features/dashboard/services/item-category.service';
 import { v4 } from 'uuid';
-import { Comment } from '../models/comment';
+import { CommentModel } from '../models/comment';
+import { faker } from '@faker-js/faker';
 
 @Injectable({ providedIn: 'root' })
 export class ListItemsService {
-  items = new BehaviorSubject<ListItem[]>([]);
+  items = new BehaviorSubject<ListItemModel[]>([]);
 
   constructor(private itemCategoryService: ItemCategoryService) {
     this.items.next(this.getItems());
@@ -27,11 +28,11 @@ export class ListItemsService {
       );
   }
 
-  public addItem(payload: ListItem) {
-    this.items.next([new ListItem(payload), ...this.items.getValue()]);
+  public addItem(payload: ListItemModel) {
+    this.items.next([new ListItemModel(payload), ...this.items.getValue()]);
   }
 
-  public updateItem(payload: ListItem) {
+  public updateItem(payload: ListItemModel) {
     const items = this.items.getValue();
     const newItems = items.map((e) => (e.id === payload.id ? payload : e));
 
@@ -50,38 +51,29 @@ export class ListItemsService {
       this.items
         .getValue()
         .map((item) =>
-          item.id === id ? { ...item, upvotes: item.upvotes + 1 } : item
+          item.id === id
+            ? new ListItemModel({ ...item, upvotes: item.upvotes + 1 })
+            : item
         )
     );
   }
 
-  public addComment(item: ListItem, comment: string) {
-    const items = this.items.getValue();
+  public addComment(item: ListItemModel, comment: string) {
+    item.addComment({
+      img: faker.image.avatar(),
+      name: faker.name.fullName(),
+      tag: `@${faker.internet.userName()}`,
+      comment,
+      replies: [],
+      id: v4(),
+    });
 
-    const itemComments = item.comments;
-    itemComments.push(
-      new Comment({
-        name: 'Dawid',
-        tag: '@dawid',
-        comment,
-        replies: [],
-        id: v4(),
-      })
-    );
-
-    const newItemPayload: ListItem = {
-      ...item,
-      comments: itemComments,
-    };
-
-    const newItems = items.map((e) => (e.id === item.id ? newItemPayload : e));
-
-    this.items.next(newItems);
+    this.items.next(this.items.getValue());
   }
 
   public getItem(
     id: string,
-    subscriptionCallback: (item: ListItem | undefined) => any
+    subscriptionCallback: (item: ListItemModel | undefined) => any
   ) {
     return this.items.subscribe((items) => {
       const item = items.find((e) => e.id === id);
@@ -98,6 +90,8 @@ export class ListItemsService {
     }
 
     const valueFromStorage = JSON.parse(storage);
-    return Array.isArray(valueFromStorage) ? valueFromStorage : [];
+    return Array.isArray(valueFromStorage)
+      ? valueFromStorage.map((e) => new ListItemModel(e))
+      : [];
   }
 }

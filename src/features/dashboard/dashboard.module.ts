@@ -20,7 +20,7 @@ import { RouterModule } from '@angular/router';
     CategoriesComponent,
     ListViewComponent,
   ],
-  providers: [ItemCategoryService],
+  providers: [ItemCategoryService, Comment],
   imports: [CommonModule, RouterModule],
   exports: [DashboardComponent],
 })

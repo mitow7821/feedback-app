@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { AlertType } from 'src/core/enums/alert-type';
 import { AlertService } from 'src/core/services/alert.service';
 import { ListItemsService } from 'src/core/services/list-items.service';
-import { ListItem } from 'src/features/dashboard/models/list-item';
+import { ListItemModel } from 'src/features/dashboard/models/list-item';
 
 @Component({
   selector: 'add-comment [item]',
@@ -15,7 +15,7 @@ export class AddCommentComponent {
     validators: [Validators.required, Validators.maxLength(250)],
   });
 
-  @Input() item!: ListItem;
+  @Input() item!: ListItemModel;
 
   constructor(
     private listItemsService: ListItemsService,

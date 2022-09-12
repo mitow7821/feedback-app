@@ -7,7 +7,7 @@ import { ItemStatus } from 'src/core/enums/item-status';
 import { AlertService } from 'src/core/services/alert.service';
 import { ListItemsService } from 'src/core/services/list-items.service';
 import { NavigationService } from 'src/core/services/navigation.service';
-import { ListItem } from 'src/features/dashboard/models/list-item';
+import { ListItemModel } from 'src/features/dashboard/models/list-item';
 import { v4 } from 'uuid';
 
 @Component({
@@ -16,7 +16,7 @@ import { v4 } from 'uuid';
   styles: [],
 })
 export class EditComponent implements OnInit {
-  item: ListItem | undefined;
+  item: ListItemModel | undefined;
   itemCategories = Object.values(ItemCategory);
   itemStatuses = Object.values(ItemStatus);
   form: FormGroup = new FormGroup({});
@@ -73,13 +73,13 @@ export class EditComponent implements OnInit {
       return;
     }
 
-    const payload: ListItem = {
+    const payload = new ListItemModel({
       ...this.item,
       description: this.form.value.description ?? this.item.description,
       title: this.form.value.title ?? this.item.title,
       category: this.form.value.category ?? this.item.category,
       status: this.form.value.status ?? this.item.status,
-    };
+    });
 
     this.listItemsService.updateItem(payload);
     this.alertService.openAlert({

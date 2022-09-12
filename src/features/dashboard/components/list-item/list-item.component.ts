@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ListItem } from '../../models/list-item';
+import { ListItemModel } from '../../models/list-item';
 
 @Component({
   selector: 'list-item [item]',
@@ -7,7 +7,7 @@ import { ListItem } from '../../models/list-item';
   templateUrl: './list-item.component.html',
 })
 export class ListItemComponent implements OnInit {
-  @Input() item!: ListItem;
+  @Input() item!: ListItemModel;
   @Output() upvote = new EventEmitter();
 
   ngOnInit(): void {
