@@ -59,16 +59,22 @@ export class ListItemsService {
   }
 
   public addComment(item: ListItemModel, comment: string) {
+    const id = v4();
+
     item.addComment({
       img: faker.image.avatar(),
       name: faker.name.fullName(),
       tag: `@${faker.internet.userName()}`,
       comment,
       replies: [],
-      id: v4(),
+      id,
     });
 
     this.items.next(this.items.getValue());
+
+    setTimeout(() => {
+      (document.querySelector(`#comment-${id}`) as any)?.focus();
+    }, 0);
   }
 
   public getItem(

@@ -1,4 +1,4 @@
-<div class="flex gap-3">
+<div class="flex gap-3 rounded-md p-2 focus:bg-blue-50" [id]="'comment-'+comment.id" tabindex="0">
     <img [src]="comment.img" class="w-10 h-10 rounded-full" />
 
     <div class="grow flex flex-col gap-3">
@@ -15,7 +15,8 @@
         <div class="border-l -ml-8 pl-8 flex flex-col gap-5">
             <p class="text-gray-600 text-[0.91rem]"> {{comment.comment}} </p>
 
-            <div *ngFor="let reply of comment.replies" class="flex gap-3 mt-2">
+            <div *ngFor="let reply of comment.replies" class="flex gap-3 rounded-md p-2 focus:bg-blue-50"
+                [id]="'reply-'+reply.id" tabindex="0">
                 <img [src]="reply.img" class="w-10 h-10 rounded-full" />
 
 

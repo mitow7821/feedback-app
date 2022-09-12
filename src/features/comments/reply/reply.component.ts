@@ -39,9 +39,11 @@ export class ReplyComponent {
       return;
     }
 
+    const id = v4();
+
     this.replyEventData.comment.addReply({
       comment: this.comment.value,
-      id: v4(),
+      id,
       img: faker.image.avatar(),
       name: faker.name.fullName(),
       replyTag: this.replyEventData.replyTag,
@@ -57,5 +59,9 @@ export class ReplyComponent {
       title: 'Success',
       description: 'Reply has been added!',
     });
+
+    setTimeout(() => {
+      (document.querySelector(`#reply-${id}`) as any)?.focus();
+    }, 0);
   }
 }
